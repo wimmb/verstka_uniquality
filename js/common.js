@@ -41,6 +41,48 @@ $(document).ready(function () {
 		});
 	}
 
+	// Deals carousel swiper
+	const deals__carousel = document.querySelector('.deals__carousel');
+	if (deals__carousel) {
+		const swiper = new Swiper(deals__carousel, {
+			slidesPerView: 'auto',
+			allowTouchMove: true,
+			spaceBetween: 20,
+			loop: true,
+			speed: 700,
+			//autoplay: true,
+			pagination: {
+				el: '.deals--pagi',
+				clickable: true,
+			},
+			navigation: {
+				nextEl: '.deals--navi-next',
+				prevEl: '.deals--navi-prev',
+			},
+		});
+	}
+
+	// Services carousel swiper
+	const services__carousel = document.querySelector('.services__carousel');
+	if (services__carousel) {
+		const swiper = new Swiper(services__carousel, {
+			slidesPerView: 1,
+			allowTouchMove: true,
+			spaceBetween: 20,
+			loop: true,
+			speed: 700,
+			//autoplay: true,
+			pagination: {
+				el: '.servs--pagi',
+				clickable: true,
+			},
+			navigation: {
+				nextEl: '.servs--navi-next',
+				prevEl: '.servs--navi-prev',
+			},
+		});
+	}
+
     // Reviews carousel swiper
 	const reviews__carousel = document.querySelector('.reviews__carousel');
 	if (reviews__carousel) {
@@ -181,5 +223,37 @@ document.addEventListener('DOMContentLoaded', function () {
 				block.classList.add('t_active');
 			}
 		});
+	});
+});
+
+// Default carousel swiper
+document.addEventListener('DOMContentLoaded', function () {
+	const breakpoint = 767.98;
+	const carousels = document.querySelectorAll('.def-carousel');
+
+	if (!carousels.length) return;
+
+	carousels.forEach((carousel) => {
+		let swiperInstance = null;
+		const initOrDestroy = () => {
+			if (window.innerWidth <= breakpoint) {
+				if (!swiperInstance) {
+					swiperInstance = new Swiper(carousel, {
+						slidesPerView: 1.1,
+						spaceBetween: 20,
+						allowTouchMove: true,
+						loop: false,
+						speed: 600,
+					});
+				}
+			} else {
+				if (swiperInstance) {
+					swiperInstance.destroy(true, true);
+					swiperInstance = null;
+				}
+			}
+		};
+		initOrDestroy();
+		window.addEventListener('resize', initOrDestroy);
 	});
 });
